@@ -25,9 +25,8 @@ const Title = styled(Link)`
   font-weight: 400;
   font-size: 0.9rem;
   margin: 0;
-  color:inherit;
+  color: inherit;
   text-decoration: none;
-  
 `;
 
 const ProductInfoBox = styled.div`
@@ -35,20 +34,32 @@ const ProductInfoBox = styled.div`
 `;
 
 const PriceRow = styled.div`
-  display: flex;
+  display: block;
   align-items: center;
   justify-content: space-between;
-  margin-top: 5px;
+  margin-top: 2px;
+
+  @media screen and (min-width: 768px) {
+    display: flex;
+    gap: 5px;
+  }
 `;
 
 const Price = styled.div`
-  font-size: 1.5rem;
-  font-weight: 600;
-`;
+  font-size: 1rem;
+  font-weight: 400;
+  text-align: right;
+  margin: 5px 0;
+  @media screen and (min-width: 768px) {
+    font-size: 1.2rem;
+    text-align: left;
+    font-weight:600;
+  }
+`; 
 
 export const ProductBox = ({ _id, title, description, price, images }) => {
-  const url = '/product/' + _id;
-  const {addProduct} = useContext(CartContext)
+  const url = "/product/" + _id;
+  const { addProduct } = useContext(CartContext);
   return (
     <ProductWrapper>
       <WhiteBox href={url}>
@@ -60,9 +71,10 @@ export const ProductBox = ({ _id, title, description, price, images }) => {
         <Title href={url}>{title}</Title>
         <PriceRow>
           <Price>${price}</Price>
-          <Button primary outline onClick={() => addProduct(_id)}>Add to cart</Button>
+          <Button block primary outline onClick={() => addProduct(_id)}>
+            Add to cart
+          </Button>
         </PriceRow>
-        
       </ProductInfoBox>
     </ProductWrapper>
   );
