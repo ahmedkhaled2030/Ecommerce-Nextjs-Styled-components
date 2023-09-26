@@ -1,16 +1,18 @@
 const { Schema, model, models } = require("mongoose");
 
-
-const OrderSchema = new Schema({
+const OrderSchema = new Schema(
+  {
+    userEmail: String,
     line_items: Object,
     name: String,
-    email:String,
-    city:String,
-    postalCode:String,
-    streetAddress:String,
+    email: String,
+    city: String,
+    postalCode: String,
+    streetAddress: String,
     country: String,
-    paid:Boolean,
-},
-{ timestamps: true })
+    paid: Boolean,
+  },
+  { timestamps: true }
+);
 //HINT: if there is no model make a model
-export const Order = models?.Order || model('Order' ,OrderSchema)
+export const Order = models?.Order || model("Order", OrderSchema);

@@ -8,15 +8,31 @@ import axios from "axios";
 import { useContext, useEffect, useState } from "react";
 import { styled } from "styled-components";
 import { useRouter } from "next/router";
+import { signIn, useSession } from "next-auth/react";
+import WhiteBox from "@/components/WhiteBox";
 
 const ColumnsWrapper = styled.div`
   display: grid;
   grid-template-columns: 1fr;
+  @media screen and (min-width: 768px) {
+    grid-template-columns: 1.2fr 0.8fr;
+  }
   gap: 40px;
   margin-top: 40px;
-
-  @media screen and (min-width: 768px) {
-    rid-template-columns: 1.2fr 0.8fr;
+  margin-bottom: 40px;
+  table thead tr th:nth-child(3),
+  table tbody tr td:nth-child(3),
+  table tbody tr.subtotal td:nth-child(2) {
+    text-align: right;
+  }
+  table tr.subtotal td {
+    padding: 15px 0;
+  }
+  table tbody tr.subtotal td:nth-child(2) {
+    font-size: 1.4rem;
+  }
+  tr.total td {
+    font-weight: bold;
   }
 `;
 
@@ -28,42 +44,42 @@ const Box = styled.div`
 
 const ProductInfoCell = styled.td`
   padding: 10px 0;
+  button {
+    padding: 0 !important;
+  }
 `;
 
 const ProductImageBox = styled.div`
-  width: 100px;
+  width: 70px;
   height: 100px;
-  border-radius: 10px;
-  border: 1px solid rgba(0, 0, 0, 0.1);
   padding: 2px;
+  border: 1px solid rgba(0, 0, 0, 0.1);
   display: flex;
   align-items: center;
   justify-content: center;
-  margin-bottom: 10px;
+  border-radius: 10px;
   img {
-    max-width: 100px;
-    max-height: 100px;
+    max-width: 60px;
+    max-height: 60px;
   }
-
   @media screen and (min-width: 768px) {
     padding: 10px;
-    
+    width: 100px;
+    height: 100px;
+    img {
+      max-width: 80px;
+      max-height: 80px;
+    }
   }
 `;
 
 const QuantityLabel = styled.span`
-display:block;
   padding: 0 15px;
-  margin: 5px 0;
+  display: block;
   @media screen and (min-width: 768px) {
-    display:inline-block;
-  padding: 0 10px;
+    display: inline-block;
+    padding: 0 6px;
   }
-`;
-
-const Total = styled.td`
-  padding-top: 10px;
-  font-weight: bold;
 `;
 
 const CityHolder = styled.div`
@@ -71,8 +87,14 @@ const CityHolder = styled.div`
   gap: 5px;
 `;
 
+const Total = styled.td`
+  padding-top: 10px;
+  font-weight: bold;
+`;
 export default function CartPage() {
-  const { cartProducts, addProduct, removeProduct,clearCart } = useContext(CartContext);
+  const { cartProducts, addProduct, removeProduct, clearCart } =
+    useContext(CartContext);
+  const { data: session } = useSession();
   const router = useRouter();
   const currentUrl = router.asPath;
   const [products, setProducts] = useState([]);
@@ -83,31 +105,48 @@ export default function CartPage() {
   const [postalCode, setPostalCode] = useState("");
   const [streetAddress, setStreetAddress] = useState("");
   const [country, setCountry] = useState("");
-  const [isSuccess,setIsSuccess] = useState(false);
- 
-
-
+  const [isSuccess, setIsSuccess] = useState(false);
 
   useEffect(() => {
     if (cartProducts.length > 0) {
-      axios.post('/api/cart', {ids:cartProducts})
-        .then(response => {
-          setProducts(response.data);
-        })
+      axios.post("/api/cart", { ids: cartProducts }).then((response) => {
+        setProducts(response.data);
+      });
     } else {
       setProducts([]);
     }
   }, [cartProducts]);
   useEffect(() => {
-    if (typeof window === 'undefined') {
+    if (typeof window === "undefined") {
       return;
     }
-    if (window?.location.href.includes('success')) {
+    if (window?.location.href.includes("success")) {
       setIsSuccess(true);
       clearCart();
     }
-    
   }, []);
+
+  useEffect(() => {
+    if (!session) {
+      return;
+    }
+    axios.get("/api/address").then((res) => {
+      console.log("res", res);
+
+      if (res.data) {
+        setName(res.data.name);
+        setEmail(res.data.email);
+        setCity(res.data.city);
+        setPostalCode(res.data.postalCode);
+        setStreetAddress(res.data.streetAddress);
+        setCountry(res.data.country);
+      }
+    });
+  }, [session]);
+
+  const login = async () => {
+    await signIn("google");
+  };
 
   const moreOfThisProduct = (id) => {
     addProduct(id);
@@ -160,13 +199,9 @@ export default function CartPage() {
       <Center>
         <ColumnsWrapper>
           <Box>
-           
-          <h2>Cart</h2>
-              {!cartProducts?.length && (
-                <div>Your cart is empty</div>
-              )}
+            <h2>Cart</h2>
+            {!cartProducts?.length && <div>Your cart is empty</div>}
             {products.length > 0 && (
-             
               <Table>
                 <thead>
                   <tr>
@@ -215,10 +250,10 @@ export default function CartPage() {
               </Table>
             )}
           </Box>
-          {!!cartProducts?.length && (
+          {!!cartProducts?.length && session && (
             <Box>
+             
               <h2>Order Information</h2>
-
               <Input
                 placeholder="Name"
                 type="text"
@@ -267,9 +302,20 @@ export default function CartPage() {
               <Button block black onClick={goToPayment}>
                 Continue to payment
               </Button>
+              
             </Box>
           )}
+          {/* <WhiteBox>
+              {!session && (
+            <Button primary onClick={login}>
+              Login
+            </Button>
+          )}
+          </WhiteBox> */}
+         
+        
         </ColumnsWrapper>
+        
       </Center>
     </>
   );

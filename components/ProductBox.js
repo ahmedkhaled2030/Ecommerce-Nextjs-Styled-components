@@ -1,8 +1,12 @@
 import { styled } from "styled-components";
 import Button from "./Button";
 import Link from "next/link";
-import { useContext } from "react";
+import { useContext, useState } from "react";
 import { CartContext } from "./CartContext";
+import HeartOutlineIcon from "./icons/HeartOutlineIcon";
+import HeartSolidIcon from "./icons/HeartSolidIcon";
+import axios from "axios";
+import { useSession } from "next-auth/react";
 
 const ProductWrapper = styled.div``;
 
@@ -15,6 +19,7 @@ const WhiteBox = styled(Link)`
   justify-content: center;
   text-align: center;
   border-radius: 10px;
+  position: relative;
   img {
     max-width: 100%;
     max-width: 110px;
@@ -53,17 +58,58 @@ const Price = styled.div`
   @media screen and (min-width: 768px) {
     font-size: 1.2rem;
     text-align: left;
-    font-weight:600;
+    font-weight: 600;
   }
-`; 
+`;
 
-export const ProductBox = ({ _id, title, description, price, images }) => {
+const WishListButton = styled.button`
+  border: none;
+  width: 40px;
+  height: 40px;
+  padding: 10px;
+  position: absolute;
+  top: 0;
+  right: 0;
+  background: transparent;
+  ${props => props.wished ? `
+  color:red;
+  ` : `
+  color:black;
+  `}
+  cursor: pointer;
+  svg {
+    width: 20px;
+  }
+`;
+
+export const ProductBox = ({ _id, title, description, price, images ,wished = false ,onRemoveFromWishList=() => {} }) => {
   const url = "/product/" + _id;
   const { addProduct } = useContext(CartContext);
+  const [isWished, setIsWished] = useState(wished);
+  const { data: session } = useSession();
+  const addToWishList = (ev) => {
+    ev.preventDefault();
+    ev.stopPropagation();
+
+    const nextValue = !isWished;
+    if (nextValue == false && onRemoveFromWishList) {
+      onRemoveFromWishList(_id)
+    }
+    axios.post('/api/wishlist', {
+      product: _id
+    }).then(() => {});
+    setIsWished(nextValue)   
+  };
   return (
     <ProductWrapper>
       <WhiteBox href={url}>
         <div>
+          {session && (
+            <WishListButton wished={isWished} onClick={addToWishList}>
+            {isWished ? <HeartSolidIcon /> : <HeartOutlineIcon />}
+          </WishListButton>
+          )}
+          
           <img src={images[0]} alt="" />
         </div>
       </WhiteBox>

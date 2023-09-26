@@ -3,8 +3,12 @@ import Header from "@/components/Header";
 import { ProductBox } from "@/components/ProductBox";
 import { Category } from "@/models/Category";
 import { Product } from "@/models/Product";
+import { getServerSession } from "next-auth";
 import Link from "next/link";
 import styled from "styled-components";
+import { authOptions } from "./api/auth/[...nextauth]";
+import { WishedProduct } from "@/models/WishedProduct";
+import { RevealWrapper } from "next-reveal";
 
 const CategoryGrid = styled.div`
   display: grid;
@@ -46,7 +50,11 @@ const ShowAllSquare = styled(Link)`
   text-decoration: none;
 `;
 
-export default function CategoriesPage({ mainCategories, categoriesProducts }) {
+export default function CategoriesPage({
+  mainCategories,
+  categoriesProducts,
+  wishedProducts = [],
+}) {
   return (
     <>
       <Header />
@@ -60,8 +68,10 @@ export default function CategoriesPage({ mainCategories, categoriesProducts }) {
               </div>
             </CategoryTitle>
             <CategoryGrid>
-              {categoriesProducts[cat._id].map((p) => (
-                <ProductBox key={p._id} {...p} />
+              {categoriesProducts[cat._id].map((p, index) => (
+                <RevealWrapper delay={index * 50} key={p._id}>
+                  <ProductBox {...p} wished={wishedProducts.includes(p._id)} />
+                </RevealWrapper>
               ))}
 
               <ShowAllSquare href={"category/" + cat._id}>
@@ -75,12 +85,14 @@ export default function CategoriesPage({ mainCategories, categoriesProducts }) {
   );
 }
 
-export async function getServerSideProps() {
+export async function getServerSideProps(ctx) {
   const categories = await Category.find();
 
   const mainCategories = categories.filter((c) => !c.parent);
 
   const categoriesProducts = {};
+
+  const allFetchedProductsId = [];
 
   for (const mainCat of mainCategories) {
     const mainCatId = mainCat._id.toString();
@@ -94,8 +106,17 @@ export async function getServerSideProps() {
       limit: 3,
       sort: { _id: -1 },
     });
+    allFetchedProductsId.push(...products.map((p) => p._id.toString()));
+
+    console.log("allFetchedProductsId", allFetchedProductsId);
+    //HINT :// allFetchedProductsId [
+    //   '650419953fab4ec28fcfb66b',
+    //   '650418ee3fab4ec28fcfb659',
+    //   '65041b613fab4ec28fcfb6a2',
+    //   '65041b1d3fab4ec28fcfb69a'
+    // ]
     categoriesProducts[mainCat._id] = products;
-    console.log("categoriesProducts", categoriesProducts);
+    // console.log("categoriesProducts", categoriesProducts);
     //HINT: '65041a1b3fab4ec28fcfb673': [
     // {
     //     _id: new ObjectId("65041b613fab4ec28fcfb6a2"),
@@ -124,10 +145,20 @@ export async function getServerSideProps() {
     // ]
   }
 
+
+  const session = await getServerSession(ctx.req, ctx.res, authOptions);
+  const wishedProducts = session?.user
+    ? await WishedProduct.find({
+        userEmail: session?.user.email,
+        product: allFetchedProductsId
+      })
+    : [];
+
   return {
     props: {
       mainCategories: JSON.parse(JSON.stringify(mainCategories)),
       categoriesProducts: JSON.parse(JSON.stringify(categoriesProducts)),
+      wishedProducts: (await wishedProducts).map((i) => i.product.toString()),
     },
   };
 }
