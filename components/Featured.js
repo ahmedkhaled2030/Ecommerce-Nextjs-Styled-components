@@ -5,6 +5,7 @@ import { ButtonLink } from "./ButtonLink";
 import { CartIcon } from "./icons/CartIcon";
 import { useContext } from "react";
 import { CartContext } from "./CartContext";
+import { RevealWrapper } from "next-reveal";
 
 const Bg = styled.div`
   background-color: #222;
@@ -26,6 +27,9 @@ const ColumnsWrapper = styled.div`
 
   div:nth-child(1) {
     order: 2;
+    @media screen and (max-width: 768px) {
+   text-align: center;
+  }
   }
 
   @media screen and (min-width: 768px) {
@@ -62,6 +66,23 @@ const ButtonsWrapper = styled.div`
   display: flex;
   gap: 10px;
   margin-top: 25px;
+  @media screen and (max-width: 768px) {
+   display: flex;
+   justify-content: center;
+  }
+`;
+
+const CenterImg = styled.div`
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+`;
+
+const ImgColumn = styled(Column)`
+  & > div {
+    width: 100%;
+  }
 `;
 
 export default function Featured({ product }) {
@@ -71,9 +92,9 @@ export default function Featured({ product }) {
     <Bg>
       <Center>
         <ColumnsWrapper>
-          <div>
-            <Column>
-              <div>
+          <Column>
+            <div>
+              <RevealWrapper origin={"left"} delay={0}>
                 <Title>{product?.title}</Title>
                 <Desc>{product?.description}</Desc>
                 <ButtonsWrapper>
@@ -89,13 +110,17 @@ export default function Featured({ product }) {
                     Add to cart
                   </Button>
                 </ButtonsWrapper>
-              </div>
-            </Column>
-          </div>
+              </RevealWrapper>
+            </div>
+          </Column>
 
-          <div>
-            <img src="https://res.cloudinary.com/dzss1fbkm/image/upload/v1693569276/51wZPnAGo0L.__AC_SX300_SY300_QL70_ML2_-removebg-preview_udsd6n.png" />
-          </div>
+          <ImgColumn>
+            <RevealWrapper delay={0}>
+              <CenterImg>
+                <img src={product.images?.[0]} className={"main"} alt="" />
+              </CenterImg>
+            </RevealWrapper>
+          </ImgColumn>
         </ColumnsWrapper>
       </Center>
     </Bg>

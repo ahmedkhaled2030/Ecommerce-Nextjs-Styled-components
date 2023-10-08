@@ -21,8 +21,9 @@ const ColumnsWrapper = styled.div`
   margin-top: 40px;
   margin-bottom: 40px;
   table thead tr th:nth-child(3),
-  table tbody tr td:nth-child(3),
-  table tbody tr.subtotal td:nth-child(2) {
+  table tbody tr td:nth-child(3)
+  ,table tbody tr.subtotal td:nth-child(2) 
+   {
     text-align: right;
   }
   table tr.subtotal td {
@@ -30,6 +31,7 @@ const ColumnsWrapper = styled.div`
   }
   table tbody tr.subtotal td:nth-child(2) {
     font-size: 1.4rem;
+    
   }
   tr.total td {
     font-weight: bold;
@@ -58,6 +60,7 @@ const ProductImageBox = styled.div`
   align-items: center;
   justify-content: center;
   border-radius: 10px;
+  margin-bottom: 10px;
   img {
     max-width: 60px;
     max-height: 60px;
@@ -106,6 +109,7 @@ export default function CartPage() {
   const [streetAddress, setStreetAddress] = useState("");
   const [country, setCountry] = useState("");
   const [isSuccess, setIsSuccess] = useState(false);
+  const [shippingFee, setShippingFee] = useState(null);
 
   useEffect(() => {
     if (cartProducts.length > 0) {
@@ -116,6 +120,7 @@ export default function CartPage() {
       setProducts([]);
     }
   }, [cartProducts]);
+
   useEffect(() => {
     if (typeof window === "undefined") {
       return;
@@ -124,6 +129,10 @@ export default function CartPage() {
       setIsSuccess(true);
       clearCart();
     }
+    axios.get("/api/settings?name=shippingFee").then((res) => {
+      console.log("shippingFee", shippingFee);
+      setShippingFee(res.data.value);
+    });
   }, []);
 
   useEffect(() => {
@@ -172,10 +181,10 @@ export default function CartPage() {
     }
   };
 
-  let total = 0;
+  let ProductsTotal = 0;
   for (const productId of cartProducts) {
     const price = products.find((p) => p._id === productId)?.price || 0;
-    total += price;
+    ProductsTotal += price;
   }
 
   if (isSuccess) {
@@ -241,10 +250,17 @@ export default function CartPage() {
                       </td>
                     </tr>
                   ))}
-                  <tr>
-                    <td></td>
-                    <td></td>
-                    <Total>${total}</Total>
+                  <tr className="subtotal">
+                    <td colSpan={2}>Products</td>
+                    <td>${ProductsTotal}</td>
+                  </tr>
+                  <tr  className="subtotal">
+                    <td colSpan={2}>Shipping</td>
+                    <td>${shippingFee}</td>
+                  </tr>
+                  <tr  className="subtotal total">
+                    <td colSpan={2}>Total</td>
+                    <td>${ProductsTotal + parseInt(shippingFee || 0) }</td>
                   </tr>
                 </tbody>
               </Table>
@@ -252,7 +268,6 @@ export default function CartPage() {
           </Box>
           {!!cartProducts?.length && session && (
             <Box>
-             
               <h2>Order Information</h2>
               <Input
                 placeholder="Name"
@@ -302,7 +317,6 @@ export default function CartPage() {
               <Button block black onClick={goToPayment}>
                 Continue to payment
               </Button>
-              
             </Box>
           )}
           {/* <WhiteBox>
@@ -312,10 +326,7 @@ export default function CartPage() {
             </Button>
           )}
           </WhiteBox> */}
-         
-        
         </ColumnsWrapper>
-        
       </Center>
     </>
   );
