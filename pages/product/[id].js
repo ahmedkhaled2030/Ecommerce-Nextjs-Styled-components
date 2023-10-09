@@ -3,6 +3,7 @@ import { CartContext } from "@/components/CartContext";
 import Center from "@/components/Center";
 import Header from "@/components/Header";
 import ProductImages from "@/components/ProductImages";
+import ProductReviews from "@/components/ProductReviews";
 import Title from "@/components/Title";
 import { CartIcon } from "@/components/icons/CartIcon";
 
@@ -64,6 +65,7 @@ const {addProduct} = useContext(CartContext)
             </PriceRow>
           </div>
         </ColWrapper>
+        <ProductReviews product ={product} />
       </Center>
     </>
   );
