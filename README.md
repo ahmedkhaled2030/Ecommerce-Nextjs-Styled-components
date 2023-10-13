@@ -17,6 +17,7 @@
 ✅ react-spinners to handle loading state .<br />
 ✅ using Lodash's debounce function that helps to delay the execution of a search function until search word is ok <br />
 ✅ Handling backend api's for [Auth, User, Product, Cart, Order] <br />
+✅ using MongoDB Cloud (Atlas) to store data. <br />
 
 ## Skills 
 
