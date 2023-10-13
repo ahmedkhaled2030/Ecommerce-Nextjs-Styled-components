@@ -16,11 +16,12 @@
 ✅ using next-auth for authentication solutions (Google , Facebook)<br />
 ✅ react-spinners to handle loading state .<br />
 ✅ using Lodash's debounce function that helps to delay the execution of a search function until search word is ok <br />
+✅ Handling backend api's for [Auth, User, Product, Cart, Order] <br />
 
 ## Skills 
 
 🚀 Next js<br />
-🚀 mongoose<br />
+🚀 mongoose , MongoDB Cloud<br />
 🚀 next-auth<br />
 🚀 next-reveal<br />
 🚀 react-spinners<br />
