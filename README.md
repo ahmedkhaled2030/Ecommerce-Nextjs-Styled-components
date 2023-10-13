@@ -52,7 +52,6 @@
 ![Details_1](https://github.com/ahmedkhaled2030/Ecommerce-Nextjs-Styled-components/assets/113113701/59369899-5e3b-4024-a38f-a65a171e02cc)
 ![all_1](https://github.com/ahmedkhaled2030/Ecommerce-Nextjs-Styled-components/assets/113113701/e135b42f-2837-4582-99fc-d48f9e97d6d7)
 ![search_1](https://github.com/ahmedkhaled2030/Ecommerce-Nextjs-Styled-components/assets/113113701/3d976f24-3b3b-4edb-9fe1-0251b49e7981)
-![cat_1](https://github.com/ahmedkhaled2030/Ecommerce-Nextjs-Styled-components/assets/113113701/6250e28c-cd15-4776-be57-a5188d8277d0)
 ![cart_!](https://github.com/ahmedkhaled2030/Ecommerce-Nextjs-Styled-components/assets/113113701/e1eb1dd7-57fa-4a35-b72b-be3d6f93dcdf)
 
 
