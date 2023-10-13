@@ -1,38 +1,70 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+## Responsive Shopping Cart (NestJS) [DigitalNest]
 
-## Getting Started
+## Features
+✅ using Redux toolkit for state management for handling cart and login.<br />
+✅ using Material Ui for giving some beautiful UI.<br />
+✅ using Swiper js for handling the slider of the landing page.<br />
+✅ Filtering products in category page by size and color and sorting by price.<br />
+✅ On the product page, you can select the amount and color and see the description of the product.<br />
+✅ On the cart page, you can modify your order, make sure that is ok, and then go to checkout page.<br />
+✅ using stripe to handle payment methods and finish the order.<br />
+✅ using React router V6 to navigate between components.<br />
+✅ using Axios to call APIs that are made from the backend.<br />
+✅ using redux-persist to save the data of the user at every refresh.<br />
+✅ using Postman to make API for [Auth, User, Product, Cart, Order] and ensure that API is well doing.<br />
+✅ ability to use Starpi CMS to  make a relations between collections in DB and CRUD operations for any product , categories and sub-categories.<br />
+✅ using Framer motion to handle app animation.<br />
+✅ using Material UI for using icons ,skeleton , toasters and some animations.<br />
 
-First, run the development server:
+## Skills
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-```
+🚀 React<br />
+🚀 Redux Toolkit<br />
+🚀 React Router V6<br />
+🚀 Framer motion<br />
+🚀 Redux Persist<br />
+🚀 Axios<br />
+🚀 Swiper js<br />
+🚀 Material UI<br />
+🚀 Node.js<br />
+🚀 Express<br />
+🚀 Strapi<br />
+🚀 Postman<br />
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+![Home](https://github.com/ahmedkhaled2030/Ecommerce-Nextjs-Styled-components/assets/113113701/f15f3e64-0bd1-479f-8ab5-d391eea9e519)
 
-You can start editing the page by modifying `pages/index.js`. The page auto-updates as you edit the file.
 
-[API routes](https://nextjs.org/docs/api-routes/introduction) can be accessed on [http://localhost:3000/api/hello](http://localhost:3000/api/hello). This endpoint can be edited in `pages/api/hello.js`.
 
-The `pages/api` directory is mapped to `/api/*`. Files in this directory are treated as [API routes](https://nextjs.org/docs/api-routes/introduction) instead of React pages.
+## Desktop imgs
 
-This project uses [`next/font`](https://nextjs.org/docs/basic-features/font-optimization) to automatically optimize and load Inter, a custom Google Font.
+## Responsive imgs
 
-## Learn More
 
-To learn more about Next.js, take a look at the following resources:
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+## Available Scripts
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
+In the project directory, you can run:
 
-## Deploy on Vercel
+### `yarn start`
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+Runs the app in the development mode.\
+Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+The page will reload if you make edits.\
+You will also see any lint errors in the console.
+
+### `yarn test`
+
+Launches the test runner in the interactive watch mode.\
+See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+
+### `yarn build`
+
+Builds the app for production to the `build` folder.\
+It correctly bundles React in production mode and optimizes the build for the best performance.
+
+The build is minified and the filenames include the hashes.\
+Your app is ready to be deployed!
+
+See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+
