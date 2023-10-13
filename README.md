@@ -1,4 +1,4 @@
-## Responsive Shopping Cart (NestJS) [DigitalNest]
+## Responsive Shopping Cart (NextJS) [DigitalNest]
 
 ## Features
 ✅ using Redux toolkit for state management for handling cart & Wishlist .<br />
