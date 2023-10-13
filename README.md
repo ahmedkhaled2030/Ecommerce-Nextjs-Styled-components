@@ -41,7 +41,6 @@
 ![all](https://github.com/ahmedkhaled2030/Ecommerce-Nextjs-Styled-components/assets/113113701/9ed64753-624e-4173-9d3a-0fe84fda9fc1)
 ![search](https://github.com/ahmedkhaled2030/Ecommerce-Nextjs-Styled-components/assets/113113701/e203d523-b7ef-4fa2-9200-a0997a622a79)
 ![account](https://github.com/ahmedkhaled2030/Ecommerce-Nextjs-Styled-components/assets/113113701/976bd6f3-285a-4316-b783-f223cf139584)
-![cat](https://github.com/ahmedkhaled2030/Ecommerce-Nextjs-Styled-components/assets/113113701/fdf6b0fb-1c38-4ea1-9eb4-5c97ead38a46)
 ![sort](https://github.com/ahmedkhaled2030/Ecommerce-Nextjs-Styled-components/assets/113113701/57d8358c-71e7-4de6-9a81-5c9ff1b50412)
 ![wishlist](https://github.com/ahmedkhaled2030/Ecommerce-Nextjs-Styled-components/assets/113113701/aee6b525-1107-4648-9361-9da136e5d8d6)
 ![cart](https://github.com/ahmedkhaled2030/Ecommerce-Nextjs-Styled-components/assets/113113701/4d4ed0d3-c7c0-482a-afb0-33a5f0b6b336)
